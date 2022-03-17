@@ -12,12 +12,18 @@ export default function StudentCheckInOut({  }) {
 
     const checkIn = (() => {
 
-        
-        
-
-
         const students = documents.map((student) => {
-            if(user.uid == student.uid) {
+
+            if(student.status == 'in'){
+                document.getElementById('buttoncheckIn').disabled = true;
+                document.getElementById('buttoncheckOut').disabled = false;
+                //alert('You are checked in ALREADY');
+            }
+
+            else if(user.uid == student.uid) {
+
+                alert("You are checked-in");
+
                 projectFirestore.collection('guardianinfo').doc(student.id).update({
                     status: 'in'
                 })
@@ -34,24 +40,23 @@ export default function StudentCheckInOut({  }) {
                     })
                 
              //Fixed
+             document.getElementById('buttoncheckIn').disabled = true;
+             document.getElementById('buttoncheckOut').disabled = false;
             }
             
         })
 
-
-
-        alert("You are checked-in");
     })
 
-    const all = documents ? documents.filter((p) => {
+    // const all = documents ? documents.filter((p) => {
         
-        if(p.status == "in") {
-            document.getElementById('buttoncheckIn').disabled = true;
-            document.getElementById('buttoncheckOut').disabled = false;
-            return true;
-            // alert('You are checked in ALREADY');
-        }
-    }) : null
+    //     if(p.status == "in") {
+    //         document.getElementById('buttoncheckIn').disabled = true;
+    //         document.getElementById('buttoncheckOut').disabled = false;
+    //         return true;
+    //         // alert('You are checked in ALREADY');
+    //     }
+    // }) : null
 
     
     return (
